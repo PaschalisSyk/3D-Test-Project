@@ -75,7 +75,6 @@ public class Scorekeeper : MonoBehaviour
     public void ResetScore()
     {
         score = 0;
-        startingScore = startingScore + 100;
     }
 
     void Timer()
