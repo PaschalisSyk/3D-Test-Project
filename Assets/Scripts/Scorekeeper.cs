@@ -94,8 +94,7 @@ public class Scorekeeper : MonoBehaviour
 
     public void Save()
     {  
-            save.Save();
-
+        save.Save();
     }
     public int GetObjects()
     {
@@ -109,7 +108,6 @@ public class Scorekeeper : MonoBehaviour
     IEnumerator NextLevel()
     {
         Save();
-        
 
         yield return new WaitForSeconds(0.5f);
         ResetScore();

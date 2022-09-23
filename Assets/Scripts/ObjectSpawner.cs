@@ -11,51 +11,40 @@ public class ObjectSpawner : MonoBehaviour
 
     private void Start()
     {
-        foreach(GameObject gameObject in GameObject.FindGameObjectsWithTag("Tile"))
+        var tileList = GameObject.FindGameObjectsWithTag("Tile");
+        foreach (GameObject tile in tileList)
         {
-            tiles.Add(gameObject);
+            tiles.Add(tile);
         }
 
         for (int i = 0; i < objectCount; i++)
         {
             SpawnObjects();
         }
-
     }
 
     public void SpawnObjects()
     {
-        int activeObj =0;
-        foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Object"))
+        int activeObj = 0;
+        var objList = GameObject.FindGameObjectsWithTag("Object");
+        foreach (GameObject obj in objList)
         {
-            if(gameObject.activeInHierarchy)
+            if (obj.activeInHierarchy)
             {
                 activeObj++;
             }
         }
-        if(activeObj/2 > objectCount + 1)
+        if (activeObj / 2 > objectCount + 1)
         {
             return;
         }
 
         int tileIndex = Random.Range(0, tiles.Count);
         int objIndex = Random.Range(0, objects.Count);
-        if(tiles[tileIndex].GetComponent<Tile>().isTaken || !(tiles[tileIndex].GetComponent<Tile>().availiable))
+        if (tiles[tileIndex].GetComponent<Tile>().isTaken || !(tiles[tileIndex].GetComponent<Tile>().availiable))
         {
             tiles.Remove(gameObject);
         }
         Instantiate(objects[objIndex], tiles[tileIndex].transform.position + offset, Quaternion.identity);
-    }
-
-    private void Update()
-    {
-        foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Tile"))
-        {
-            if(gameObject.GetComponent<Tile>().availiable)
-            {
-                tiles.Add(gameObject);
-            }
-        }
-
     }
 }

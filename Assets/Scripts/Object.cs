@@ -19,7 +19,8 @@ public class Object : MonoBehaviour
             Destroy(gameObject);
             objectSpawner.SpawnObjects();
         }
-        if (other.gameObject.tag == "Player")
+
+        else if (other.tag == "Player")
         {
             player = FindObjectOfType<Player>();
             scorekeeper = FindObjectOfType<Scorekeeper>();
@@ -27,17 +28,11 @@ public class Object : MonoBehaviour
             Color _color = gameObject.GetComponent<MeshRenderer>().material.color;
             player.GetComponent<MeshRenderer>().material.color = _color;
 
-            if (this.gameObject.layer == 6 && player.lastObjID == 1)
+            if (this.gameObject.layer == 6 && player.lastObjID == 1 ||
+                this.gameObject.layer == 7 && player.lastObjID == 2 ||
+                this.gameObject.layer == 8 && player.lastObjID == 3)
             {
                 score = score * (-2);               
-            }
-            if (this.gameObject.layer == 7 && player.lastObjID == 2)
-            {
-                score = score * (-2);               
-            }
-            if (this.gameObject.layer == 8 && player.lastObjID == 3)
-            {
-                score = score * (-2);
             }
 
             scorekeeper.ModifyScore(score);

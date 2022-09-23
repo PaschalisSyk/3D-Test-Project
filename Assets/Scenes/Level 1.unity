@@ -1365,7 +1365,7 @@ MonoBehaviour:
   tiles: []
   cube: {fileID: 4999448837997923028, guid: b7db888101005134b804c04135b76b5c, type: 3}
   cubesCount: 2
-  cubesSpawnTime: 5
+  cubesSpawnTime: 4
 --- !u!4 &475784759
 Transform:
   m_ObjectHideFlags: 0
@@ -3024,16 +3024,12 @@ MonoBehaviour:
     time_value: 0
     levels:
     - level: 1
-      lvlIndex: 0
       itemsCollected: 0
     - level: 2
-      lvlIndex: 0
       itemsCollected: 0
     - level: 3
-      lvlIndex: 0
       itemsCollected: 0
     - level: 4
-      lvlIndex: 0
       itemsCollected: 0
 --- !u!4 &1300581981
 Transform:

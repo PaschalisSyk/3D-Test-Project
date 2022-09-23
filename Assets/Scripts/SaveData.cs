@@ -35,8 +35,8 @@ public class SaveData : MonoBehaviour
 
     public void Save()
     {
-        scoreData.score_value = scorekeeper.GetTotalScore();
-        scoreData.time_value = scorekeeper.GetTime();
+        scoreData.scoreValue = scorekeeper.GetTotalScore();
+        scoreData.timeValue = scorekeeper.GetTime();
         scoreData.levels[scorekeeper.GetLevel() -1].itemsCollected = scorekeeper.GetObjects();
 
         SaveToJson();
@@ -52,8 +52,8 @@ public class SaveData : MonoBehaviour
 [System.Serializable]
 public class ScoreData
 {
-    public int score_value;
-    public float time_value;
+    public int scoreValue;
+    public float timeValue;
     public List<Level> levels;
 
 }

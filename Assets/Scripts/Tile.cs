@@ -36,7 +36,7 @@ public class Tile : MonoBehaviour
     {
         availiable = true;
         cubeSpawner.tiles.Add(gameObject);
-        print("Exit");
-        
+        objectSpawner.tiles.Add(gameObject);
+        print("Exit");       
     }
 }
