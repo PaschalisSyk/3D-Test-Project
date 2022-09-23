@@ -64,6 +64,7 @@ public class Scorekeeper : MonoBehaviour
             if (level > 4)
             {
                 print("WIN");
+                Save();
                 Time.timeScale = 0;
             }
 
