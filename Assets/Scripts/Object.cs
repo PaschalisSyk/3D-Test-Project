@@ -24,11 +24,18 @@ public class Object : MonoBehaviour
             player = FindObjectOfType<Player>();
             scorekeeper = FindObjectOfType<Scorekeeper>();
 
-            if(this.gameObject.layer == 6 && player.lastObjID == 1)
+            Color _color = gameObject.GetComponent<MeshRenderer>().material.color;
+            player.GetComponent<MeshRenderer>().material.color = _color;
+
+            if (this.gameObject.layer == 6 && player.lastObjID == 1)
             {
-                score = score * (-2);
+                score = score * (-2);               
             }
             if (this.gameObject.layer == 7 && player.lastObjID == 2)
+            {
+                score = score * (-2);               
+            }
+            if (this.gameObject.layer == 8 && player.lastObjID == 3)
             {
                 score = score * (-2);
             }

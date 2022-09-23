@@ -8,12 +8,18 @@ public class CubeSpawner : MonoBehaviour
     [SerializeField] GameObject cube;
     Vector3 offset = new Vector3(0, 0.5f, 0);
     Player player;
+    [SerializeField] int cubesCount;
+    [SerializeField] int cubesSpawnTime;
 
     private void Start()
     {
         foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Tile"))
         {
             tiles.Add(gameObject);
+            if(!gameObject.GetComponent<Tile>().availiable)
+            {
+                tiles.Remove(gameObject);
+            }
         }
 
         player = FindObjectOfType<Player>();
@@ -25,7 +31,7 @@ public class CubeSpawner : MonoBehaviour
     {
         while(!FindObjectOfType<Player>()._lose)
         {
-            yield return new WaitForSeconds(4);
+            yield return new WaitForSeconds(cubesSpawnTime);
             if(!player.canMove)
             {
                 Spawn();

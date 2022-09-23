@@ -6,8 +6,8 @@ public class ObjectSpawner : MonoBehaviour
 {
     public List<GameObject> tiles = new List<GameObject>();
     [SerializeField] List<GameObject> objects = new List<GameObject>();
-    Vector3 offset = new Vector3(0, 0.5f, 0);
-    public int objectCount = 4;
+    Vector3 offset = new Vector3(0, 0.3f, 0);
+    [SerializeField] int objectCount;
 
     private void Start()
     {
@@ -33,7 +33,7 @@ public class ObjectSpawner : MonoBehaviour
                 activeObj++;
             }
         }
-        if(activeObj/2 > objectCount)
+        if(activeObj/2 > objectCount + 1)
         {
             return;
         }
@@ -51,10 +51,6 @@ public class ObjectSpawner : MonoBehaviour
     {
         foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Tile"))
         {
-            /*if(gameObject.GetComponent<Tile>().isTaken)
-            {
-                tiles.Remove(gameObject);
-            }*/
             if(gameObject.GetComponent<Tile>().availiable)
             {
                 tiles.Add(gameObject);

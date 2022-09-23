@@ -16,9 +16,17 @@ public class Player : MonoBehaviour
     float raylenght = 1f;
 
     public bool canMove;
-    [SerializeField] bool validMove = true;
+    bool validMove = true;
     public bool _lose = false;
+
     public int lastObjID;
+
+    Scorekeeper scorekeeper;
+
+    private void Awake()
+    {
+        scorekeeper = FindObjectOfType<Scorekeeper>();
+    }
     void Start()
     {
         currentDirection = up;
@@ -88,7 +96,7 @@ public class Player : MonoBehaviour
             canMove = true;
         }
 
-        if(Vector3.Distance(destination,transform.position) <= 0.0001f)
+        if(Vector3.Distance(destination,transform.position) <= 0)
         {
             if(canMove && validMove)
             {
@@ -112,6 +120,12 @@ public class Player : MonoBehaviour
             {
                 Invoke("IDTwo", 1);
             }
+            if (other.gameObject.layer == 8)
+            {
+                Invoke("IDThree", 1);
+            }
+
+            scorekeeper.ObjectCollection();
 
         }
         if(other.gameObject.tag == "Tiles")
@@ -157,6 +171,7 @@ public class Player : MonoBehaviour
         if(count == -4)
         {
             _lose = true;
+            scorekeeper.Save();
         }
     }
 
@@ -173,5 +188,9 @@ public class Player : MonoBehaviour
     void IDTwo()
     {
         lastObjID = 2;
+    }
+    void IDThree()
+    {
+        lastObjID = 3;
     }
 }
