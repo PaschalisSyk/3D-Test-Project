@@ -35,8 +35,14 @@ public class Tile : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         availiable = true;
-        cubeSpawner.tiles.Add(gameObject);
-        objectSpawner.tiles.Add(gameObject);
+        if(!cubeSpawner.tiles.Contains(gameObject))
+        {
+            cubeSpawner.tiles.Add(gameObject);
+        }
+        if(!objectSpawner.tiles.Contains(gameObject))
+        {
+            objectSpawner.tiles.Add(gameObject);
+        }
         print("Exit");       
     }
 }

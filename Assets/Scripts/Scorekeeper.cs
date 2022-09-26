@@ -6,14 +6,15 @@ using System;
 
 public class Scorekeeper : MonoBehaviour
 {
-    [SerializeField] int score;
-    [SerializeField] int startingScore = 0;
+    [SerializeField] int levelScore;
+    [SerializeField] int totalScore = 0;
     [SerializeField] int level;
     [SerializeField] float time;
     [SerializeField] int collectedObj;
 
     static Scorekeeper instance;
     SaveData save;
+    Player player;
 
 
     private void Awake()
@@ -21,7 +22,7 @@ public class Scorekeeper : MonoBehaviour
         ManageSingleton();
         level = SceneManager.GetActiveScene().buildIndex + 1;
         save = FindObjectOfType<SaveData>();
-        startingScore += score;
+        player = FindObjectOfType<Player>();
     }
 
     private void Update()
@@ -45,36 +46,41 @@ public class Scorekeeper : MonoBehaviour
 
     public int GetScore()
     {
-        return score;
+        return levelScore;
     }
 
     public void ModifyScore(int value)
     {
-        score += value + value*(level/2);
-        Mathf.Clamp(score, 0, int.MaxValue);
-        if(score < 0)
+        int amount = value + (level * 3);
+        totalScore += amount;
+        levelScore += amount;
+        Mathf.Clamp(levelScore, 0, int.MaxValue);
+        if(levelScore < 0)
         {
-            score = 0;
+            levelScore = 0;
         }
-        if(score >= 100)
+        if(levelScore >= 100)
         {
-            StartCoroutine(NextLevel());
-
-            level++;
-            if (level > 4)
+            if (level <= 3)
             {
+                StartCoroutine(NextLevel());
+            }
+            else
+            {
+                Time.timeScale = 0;
                 print("WIN");
                 Save();
-                Time.timeScale = 0;
             }
+            level++;
+
 
         }
-        print(score);
+        print(levelScore);
     }
 
     public void ResetScore()
     {
-        score = 0;
+        levelScore = 0;
     }
 
     void Timer()
@@ -95,6 +101,10 @@ public class Scorekeeper : MonoBehaviour
     public void Save()
     {  
         save.Save();
+        if(player._lose)
+        {
+            //Get lose menu.
+        }
     }
     public int GetObjects()
     {
@@ -116,6 +126,6 @@ public class Scorekeeper : MonoBehaviour
     }
     public int GetTotalScore()
     {
-        return startingScore;
+        return totalScore;
     }
 }

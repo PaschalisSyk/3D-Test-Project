@@ -25,6 +25,7 @@ public class ObjectSpawner : MonoBehaviour
 
     public void SpawnObjects()
     {
+        CheckTilesAvailiabilityForObj();
         int activeObj = 0;
         var objList = GameObject.FindGameObjectsWithTag("Object");
         foreach (GameObject obj in objList)
@@ -41,10 +42,26 @@ public class ObjectSpawner : MonoBehaviour
 
         int tileIndex = Random.Range(0, tiles.Count);
         int objIndex = Random.Range(0, objects.Count);
-        if (tiles[tileIndex].GetComponent<Tile>().isTaken || !(tiles[tileIndex].GetComponent<Tile>().availiable))
+        /*if (tiles[tileIndex].GetComponent<Tile>().isTaken || !(tiles[tileIndex].GetComponent<Tile>().availiable))
         {
             tiles.Remove(gameObject);
-        }
+        }*/
         Instantiate(objects[objIndex], tiles[tileIndex].transform.position + offset, Quaternion.identity);
+    }
+
+    void CheckTilesAvailiabilityForObj()
+    {
+        var availiableList = GameObject.FindGameObjectsWithTag("Tile");
+        foreach (GameObject _tile in availiableList)
+        {
+            if (_tile.GetComponent<Tile>().isTaken)
+            {
+                tiles.Remove(_tile);
+            }
+            if (!_tile.GetComponent<Tile>().availiable)
+            {
+                tiles.Remove(_tile);
+            }
+        }
     }
 }

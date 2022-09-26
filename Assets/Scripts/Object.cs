@@ -14,7 +14,7 @@ public class Object : MonoBehaviour
         objectSpawner = FindObjectOfType<ObjectSpawner>();
 
 
-        if (other.tag == "Cube" || other.tag == "Object")
+        if (other.tag == "Cube")
         {
             Destroy(gameObject);
             objectSpawner.SpawnObjects();

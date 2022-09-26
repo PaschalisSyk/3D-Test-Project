@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     float speed = 2f;
     float raylenght = 1f;
 
-    public bool canMove;
+    public bool canMove = false;
     bool validMove = true;
     public bool _lose = false;
 
@@ -56,14 +56,15 @@ public class Player : MonoBehaviour
         }
         else
         {
-            validMove = true;
+            //validMove = true;
+            StartCoroutine(MoveDelay());
         }
     }
 
 
     void Move()
     {
-        StartCoroutine(MoveDelay());
+        //StartCoroutine(MoveDelay());
 
         transform.position = Vector3.MoveTowards(transform.position, destination, speed * Time.deltaTime);
 
@@ -105,6 +106,7 @@ public class Player : MonoBehaviour
                 canMove = false;
             }
         }
+        canMove = false;
 
     }
 
@@ -131,12 +133,14 @@ public class Player : MonoBehaviour
         if(other.gameObject.tag == "Tiles")
         {
             other.GetComponent<Tile>().availiable = false;
+            other.GetComponent<Tile>().isTaken = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         other.GetComponent<Tile>().availiable = true;
+        other.GetComponent<Tile>().isTaken = false;
     }
 
     int CheckForMoves(Vector3 _direction)
@@ -172,12 +176,15 @@ public class Player : MonoBehaviour
         {
             _lose = true;
             scorekeeper.Save();
+            print("You lost");
+            Time.timeScale = 0;
         }
     }
 
     IEnumerator MoveDelay()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
+        validMove = true;
 
     }
 
