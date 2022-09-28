@@ -11,6 +11,7 @@ public class Scorekeeper : MonoBehaviour
     [SerializeField] int level;
     [SerializeField] float time;
     [SerializeField] int collectedObj;
+    [SerializeField] GameObject gameOverPanel;
 
     static Scorekeeper instance;
     SaveData save;
@@ -19,6 +20,7 @@ public class Scorekeeper : MonoBehaviour
 
     private void Awake()
     {
+        gameOverPanel.SetActive(false);
         ManageSingleton();
         level = SceneManager.GetActiveScene().buildIndex + 1;
         save = FindObjectOfType<SaveData>();
@@ -103,7 +105,7 @@ public class Scorekeeper : MonoBehaviour
         save.Save();
         if(player._lose)
         {
-            //Get lose menu.
+            gameOverPanel.SetActive(true);
         }
     }
     public int GetObjects()
@@ -127,5 +129,16 @@ public class Scorekeeper : MonoBehaviour
     public int GetTotalScore()
     {
         return totalScore;
+    }
+
+    public void RestartGame()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
+        Time.timeScale = 1;
+    }
+    public void ResetTotalScore()
+    {
+        totalScore = 0;
     }
 }

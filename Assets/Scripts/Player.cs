@@ -56,16 +56,13 @@ public class Player : MonoBehaviour
         }
         else
         {
-            //validMove = true;
-            StartCoroutine(MoveDelay());
+            validMove = true;
         }
     }
 
 
     void Move()
     {
-        //StartCoroutine(MoveDelay());
-
         transform.position = Vector3.MoveTowards(transform.position, destination, speed * Time.deltaTime);
 
         if (Input.GetKeyDown(KeyCode.W))
@@ -97,7 +94,8 @@ public class Player : MonoBehaviour
             canMove = true;
         }
 
-        if(Vector3.Distance(destination,transform.position) <= 0)
+        //if(Vector3.Distance(destination,transform.position) <= 0)
+        if(destination == transform.position)
         {
             if(canMove && validMove)
             {
@@ -139,7 +137,10 @@ public class Player : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        other.GetComponent<Tile>().availiable = true;
+        if(other != null)
+        {
+            other.GetComponent<Tile>().availiable = true;
+        }
         other.GetComponent<Tile>().isTaken = false;
     }
 
@@ -176,6 +177,7 @@ public class Player : MonoBehaviour
         {
             _lose = true;
             scorekeeper.Save();
+            scorekeeper.ResetTotalScore();
             print("You lost");
             Time.timeScale = 0;
         }
@@ -184,8 +186,6 @@ public class Player : MonoBehaviour
     IEnumerator MoveDelay()
     {
         yield return new WaitForSeconds(2f);
-        validMove = true;
-
     }
 
     void IDOne()

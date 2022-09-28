@@ -8,6 +8,7 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField] List<GameObject> objects = new List<GameObject>();
     Vector3 offset = new Vector3(0, 0.3f, 0);
     [SerializeField] int objectCount;
+    public bool canSpawnObj = true;
 
     private void Start()
     {
@@ -15,38 +16,43 @@ public class ObjectSpawner : MonoBehaviour
         foreach (GameObject tile in tileList)
         {
             tiles.Add(tile);
+            if(!tile.GetComponent<Tile>().availiable)
+            {
+                tiles.Remove(tile);
+            }
         }
 
         for (int i = 0; i < objectCount; i++)
         {
+
             SpawnObjects();
         }
     }
 
     public void SpawnObjects()
     {
-        CheckTilesAvailiabilityForObj();
-        int activeObj = 0;
-        var objList = GameObject.FindGameObjectsWithTag("Object");
-        foreach (GameObject obj in objList)
-        {
-            if (obj.activeInHierarchy)
+            canSpawnObj = false;
+            CheckTilesAvailiabilityForObj();
+            int activeObj = 0;
+            var objList = GameObject.FindGameObjectsWithTag("Object");
+            foreach (GameObject obj in objList)
             {
-                activeObj++;
+                if (obj.activeInHierarchy)
+                {
+                    activeObj++;
+                }
             }
-        }
-        if (activeObj / 2 > objectCount + 1)
-        {
-            return;
-        }
+            if (activeObj / 2 > objectCount + 1)
+            {
+                return;
+            }
 
-        int tileIndex = Random.Range(0, tiles.Count);
-        int objIndex = Random.Range(0, objects.Count);
-        /*if (tiles[tileIndex].GetComponent<Tile>().isTaken || !(tiles[tileIndex].GetComponent<Tile>().availiable))
-        {
-            tiles.Remove(gameObject);
-        }*/
-        Instantiate(objects[objIndex], tiles[tileIndex].transform.position + offset, Quaternion.identity);
+
+            int tileIndex = Random.Range(0, tiles.Count);
+            int objIndex = Random.Range(0, objects.Count);
+            Instantiate(objects[objIndex], tiles[tileIndex].transform.position + offset, Quaternion.identity);
+            tiles.Remove(tiles[tileIndex]);
+            canSpawnObj = true;
     }
 
     void CheckTilesAvailiabilityForObj()
@@ -64,4 +70,11 @@ public class ObjectSpawner : MonoBehaviour
             }
         }
     }
+
+    IEnumerator SpawnDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+        canSpawnObj = true;
+    }
+
 }

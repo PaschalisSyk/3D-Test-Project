@@ -27,22 +27,23 @@ public class Tile : MonoBehaviour
             availiable = false;
         }
     }
-    private void OnTriggerStay(Collider other)
-    {
-        
-    }
 
     private void OnTriggerExit(Collider other)
     {
+        Invoke("ResetTile", 1f);
+        print("Exit");       
+    }
+
+    void ResetTile()
+    {
         availiable = true;
-        if(!cubeSpawner.tiles.Contains(gameObject))
+        if (!cubeSpawner.tiles.Contains(gameObject))
         {
             cubeSpawner.tiles.Add(gameObject);
         }
-        if(!objectSpawner.tiles.Contains(gameObject))
+        if (!objectSpawner.tiles.Contains(gameObject))
         {
             objectSpawner.tiles.Add(gameObject);
         }
-        print("Exit");       
     }
 }

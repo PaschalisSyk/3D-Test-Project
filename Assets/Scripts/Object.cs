@@ -16,8 +16,8 @@ public class Object : MonoBehaviour
 
         if (other.tag == "Cube")
         {
+            Spawn();
             Destroy(gameObject);
-            objectSpawner.SpawnObjects();
         }
 
         else if (other.tag == "Player")
@@ -26,7 +26,7 @@ public class Object : MonoBehaviour
             scorekeeper = FindObjectOfType<Scorekeeper>();
 
             Color _color = gameObject.GetComponent<MeshRenderer>().material.color;
-            player.GetComponent<MeshRenderer>().material.color = _color;
+            player.gameObject.GetComponentInChildren<MeshRenderer>().material.color = _color;
 
             if (this.gameObject.layer == 6 && player.lastObjID == 1 ||
                 this.gameObject.layer == 7 && player.lastObjID == 2 ||
@@ -36,11 +36,14 @@ public class Object : MonoBehaviour
             }
 
             scorekeeper.ModifyScore(score);
+            Spawn();
             Destroy(gameObject);
-
-            objectSpawner.SpawnObjects();
-
         }
 
+    }
+
+    void Spawn()
+    {
+            objectSpawner.SpawnObjects();
     }
 }
