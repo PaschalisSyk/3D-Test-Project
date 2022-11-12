@@ -25,8 +25,10 @@ public class Object : MonoBehaviour
             player = FindObjectOfType<Player>();
             scorekeeper = FindObjectOfType<Scorekeeper>();
 
-            Color _color = gameObject.GetComponent<MeshRenderer>().material.color;
-            player.gameObject.GetComponentInChildren<MeshRenderer>().material.color = _color;
+            //Color _color = gameObject.GetComponent<MeshRenderer>().material.color;
+            //player.gameObject.GetComponentInChildren<MeshRenderer>().material.color = _color;
+            Material material = GetComponent<MeshRenderer>().material;
+            player.gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = material;
 
             if (this.gameObject.layer == 6 && player.lastObjID == 1 ||
                 this.gameObject.layer == 7 && player.lastObjID == 2 ||
